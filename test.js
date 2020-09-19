@@ -3,7 +3,7 @@ function minWalk(gridList, startX, startY, endX, endY) {
     let countX = startX;
     let countY = startY;
     const checkBlock = gridList[countX][countY] === 'X';
-    
+
     for (let i = 0; i < gridList.length; i++) {
         gridList[i] = gridList[i].split('');
 
@@ -63,51 +63,96 @@ function minWalk(gridList, startX, startY, endX, endY) {
             equallyX();
         } else if (startY === endY) {
             equallyY();
+            //движение по диагонали 
         } else if (startX > endX && startY < endY) {
             while (countY !== endY) {
                 countX--;
                 countY++;
+                if (gridList[countX][countY] === 'X') {
+                    countX++;
+                    countY--;
+                    break;
+                }
                 count++;
             }
-            equallyY();
+            if(checkBlock){
+                equallyY();
+                }
+                //движение по диагонали 
         } else if (startX > endX && startY > endY) {
             while (countY !== endY) {
                 countX--;
                 countY--;
+
+                if (gridList[countX][countY] === 'X') {
+                    countX++;
+                    countY++;
+                    break;
+                }
                 count++;
                 console.log('diag>>>', countX, countY);
             }
+            if(checkBlock){
             equallyY();
+            }
+            //движение по диагонали 
         } else if (startX < endX && startY < endY) {
             while (countY !== endY) {
                 countX++;
                 countY++;
+                console.log('gggg', gridList[countX][countY], countX, countY);
+
+                if (gridList[countX][countY] === 'X') {
+                    countX--;
+                    countY--;
+                    break;
+                }
                 count++;
             }
-            equallyY();
-
+            if(checkBlock){
+                equallyY();
+                }
+//движение по диагонали 
         } else if (startX < endX && startY > endY) {
             while (countY !== endY) {
                 countX++;
                 countY--;
+                if (gridList[countX][countY] === 'X') {
+                    countX--;
+                    countY++;
+                    break;
+                }
                 count++;
             }
-            equallyY();
+            if(checkBlock){
+                equallyY();
+                }
         }
     }
+    //обход заблокированой ячейки
+    if(countX !== endX && countY !== endY){
+        console.log('sfdsf');
+        
+        equallyY();
+        equallyX();
+    }
     console.log('end', countX, countY);
+
     return count;
 
 }
 
 const result = minWalk(
     [
-        '...',
-        '...',
-        '...',
+        '.....',
+        '.....',
+        '.....',
+        '.....',
+        '.....',
+
     ],
-    0, 2,
-    2, 0
+    0, 0,
+    4, 4
 );
 
 console.log('count>>>>', result);
